@@ -13,7 +13,7 @@
 	/>
 
 	<div
-		class="from-opacity-30 0 absolute z-10 h-full w-full bg-linear-to-l from-black/70 from-40% to-[#161C2D]/4 to-70%"
+		class="from-opacity-30 0 absolute z-10 h-full w-full bg-linear-to-l from-black/60 from-60% to-[#161C2D]/40"
 	></div>
 
 	<!-- navbar -->
