@@ -2,6 +2,7 @@
 	// @ts-nocheck
 	import CategorySelector from '$lib/components/upload/CategorySelector.svelte';
 	import FileUploadArea from '$lib/components/upload/FileUploadArea.svelte';
+	import FilenameInput from '$lib/components/upload/FilenameInput.svelte';
 	import FolderPreview from '$lib/components/upload/FolderPreview.svelte';
 	import PrefixInput from '$lib/components/upload/PrefixInput.svelte';
 	import UploadHeader from '$lib/components/upload/UploadHeader.svelte';
@@ -10,6 +11,7 @@
 	let file;
 	let prefix = 'rihat';
 	let category = 'gallery';
+	let filename = '';
 	let uploading = false;
 	let message = '';
 	let uploadedUrl = '';
@@ -31,6 +33,9 @@
 			form.append('file', file);
 			form.append('prefix', prefix);
 			form.append('category', category);
+			if (filename.trim()) {
+				form.append('filename', filename.trim());
+			}
 
 			const response = await fetch('/api/upload', {
 				method: 'POST',
@@ -55,6 +60,7 @@
 
 				// Reset form
 				file = null;
+				filename = '';
 			}
 		} catch (error) {
 			console.error('Upload error:', error);
@@ -65,17 +71,24 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gray-50 p-4 md:p-8">
-	<div class="mx-auto max-w-4xl">
+<div class="flex min-h-screen items-center bg-gray-50 p-4 md:p-8">
+	<div class="mx-auto w-full max-w-6xl">
 		<UploadHeader />
 
-		<PrefixInput bind:prefix disabled={uploading} />
+		<div class="grid gap-6 md:grid-cols-2">
+			<!-- Left Column -->
+			<div class="space-y-0">
+				<PrefixInput bind:prefix disabled={uploading} />
+				<CategorySelector bind:category disabled={uploading} />
+				<FilenameInput bind:filename disabled={uploading} originalFilename={file?.name || ''} />
+				<FolderPreview {prefix} {category} />
+			</div>
 
-		<CategorySelector bind:category disabled={uploading} />
-
-		<FolderPreview {prefix} {category} />
-
-		<FileUploadArea bind:file disabled={uploading} onUpload={upload} />
+			<!-- Right Column -->
+			<div>
+				<FileUploadArea bind:file disabled={uploading} onUpload={upload} />
+			</div>
+		</div>
 
 		<UploadResults bind:message {uploadedUrl} {uploadedPublicId} />
 	</div>

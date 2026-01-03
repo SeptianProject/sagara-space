@@ -8,6 +8,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const file = data.get('file') as File;
 		const prefix = (data.get('prefix') as string) || 'uploads';
 		const category = (data.get('category') as string) || 'uploads';
+		const customFilename = data.get('filename') as string;
 
 		if (!file) {
 			return Response.json({ error: 'File tidak ditemukan' }, { status: 400 });
@@ -53,18 +54,29 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const buffer = await Buffer.from(await file.arrayBuffer());
 
+		// Prepare upload options
+		const uploadOptions: any = {
+			folder: `${prefix}/${category}`,
+			resource_type: 'image'
+		};
+
+		// Add custom filename if provided
+		if (customFilename && customFilename.trim() !== '') {
+			// Sanitize filename
+			const sanitized = customFilename
+				.trim()
+				.replace(/[^a-zA-Z0-9_-]/g, '-')
+				.toLowerCase();
+			uploadOptions.public_id = sanitized;
+			uploadOptions.use_filename = false;
+		}
+
 		const result = await new Promise<any>((resolve, reject) => {
 			cloudinary.uploader
-				.upload_stream(
-					{
-						folder: `${prefix}/${category}`,
-						resource_type: 'image'
-					},
-					(error, result) => {
-						if (error) reject(error);
-						else resolve(result);
-					}
-				)
+				.upload_stream(uploadOptions, (error, result) => {
+					if (error) reject(error);
+					else resolve(result);
+				})
 				.end(buffer);
 		});
 

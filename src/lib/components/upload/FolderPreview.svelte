@@ -3,7 +3,7 @@
 	export let category = '';
 </script>
 
-<div class="mb-6 rounded-lg border border-gray-200 bg-white px-4 py-3">
+<div class="mb-5 rounded-lg border border-gray-200 bg-white px-4 py-3">
 	<div class="flex items-center gap-2 text-sm">
 		<svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 			<path

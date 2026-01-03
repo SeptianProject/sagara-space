@@ -13,9 +13,9 @@
 	];
 </script>
 
-<div class="mb-6">
+<div class="mb-5">
 	<!-- svelte-ignore a11y_label_has_associated_control -->
-	<label class="mb-3 block text-sm font-semibold text-gray-900">Pilih Kategori</label>
+	<label class="mb-2 block text-sm font-semibold text-gray-900">Pilih Kategori</label>
 	<div class="flex flex-wrap gap-2">
 		{#each categories as cat}
 			<button

@@ -37,7 +37,7 @@
 	}
 </script>
 
-<div class="mb-6">
+<div class="mb-5">
 	<!-- File Upload Area -->
 	<div
 		class="relative cursor-pointer rounded-xl border-2 border-dashed border-gray-300 bg-white p-8 text-center transition-all hover:border-blue-500 hover:bg-blue-50 {disabled

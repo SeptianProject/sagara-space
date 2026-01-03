@@ -71,6 +71,7 @@
 		tabindex="0"
 	>
 		<!-- Modal Content -->
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
 			class="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
 			on:click|stopPropagation
