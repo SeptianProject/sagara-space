@@ -1,5 +1,7 @@
 <script>
 	// @ts-nocheck
+	import { isCategoryList } from '$lib/config/categories';
+	import { getCloudinaryUrl, extractPublicId } from '$lib/utils/cloudinary';
 	import CategorySelector from '$lib/components/upload/CategorySelector.svelte';
 	import FileUploadArea from '$lib/components/upload/FileUploadArea.svelte';
 	import FilenameInput from '$lib/components/upload/FilenameInput.svelte';
@@ -8,58 +10,91 @@
 	import UploadHeader from '$lib/components/upload/UploadHeader.svelte';
 	import UploadResults from '$lib/components/upload/UploadResults.svelte';
 
-	let file;
+	let files = [];
 	let prefix = 'rihat';
 	let category = 'gallery';
 	let filename = '';
 	let uploading = false;
 	let message = '';
-	let uploadedUrl = '';
-	let uploadedPublicId = '';
+	let uploadedUrls = [];
+	let uploadedPublicIds = [];
+	let uploadedOptimizedUrls = []; // New: for optimized URLs
+
+	$: isListCategory = isCategoryList(category);
+
+	$: if (category) {
+		files = [];
+		message = '';
+		uploadedUrls = [];
+		uploadedPublicIds = [];
+		uploadedOptimizedUrls = [];
+	}
 
 	async function upload() {
-		if (!file) {
+		if (!files || files.length === 0) {
 			message = 'Pilih file terlebih dahulu';
 			return;
 		}
 
 		uploading = true;
 		message = '';
-		uploadedUrl = '';
-		uploadedPublicId = '';
+		uploadedUrls = [];
+		uploadedPublicIds = [];
+		uploadedOptimizedUrls = [];
 
 		try {
-			const form = new FormData();
-			form.append('file', file);
-			form.append('prefix', prefix);
-			form.append('category', category);
-			if (filename.trim()) {
-				form.append('filename', filename.trim());
-			}
+			const results = [];
 
-			const response = await fetch('/api/upload', {
-				method: 'POST',
-				body: form
-			});
+			// Upload each file
+			for (let i = 0; i < files.length; i++) {
+				const file = files[i];
+				const form = new FormData();
+				form.append('file', file);
+				form.append('prefix', prefix);
+				form.append('category', category);
 
-			const data = await response.json();
-
-			if (!response.ok) {
-				message = data.error || 'Upload gagal';
-				if (data.details) {
-					message += `: ${data.details}`;
+				// For list categories, use auto-numbering; for single, use category name
+				if (isListCategory) {
+					// The server will handle numbering based on existing files
+					form.append('fileIndex', (i + 1).toString());
+				} else {
+					// For single categories, use the category name as filename
+					form.append('filename', filename || category);
 				}
-				return;
+
+				const response = await fetch('/api/upload', {
+					method: 'POST',
+					body: form
+				});
+
+				const data = await response.json();
+
+				if (!response.ok) {
+					message = data.error || 'Upload gagal';
+					if (data.details) {
+						message += `: ${data.details}`;
+					}
+					break;
+				}
+
+				if (data.success) {
+					results.push(data);
+					uploadedUrls.push(data.url);
+					uploadedPublicIds.push(data.public_id);
+
+					// Generate optimized URL using utility function
+					const publicId = extractPublicId(data.url) || data.public_id;
+					const optimizedUrl = getCloudinaryUrl(publicId, 'gallery');
+					uploadedOptimizedUrls.push(optimizedUrl);
+				}
 			}
 
-			if (data.success) {
-				message = `Upload berhasil ke folder ${data.category}`;
-				uploadedUrl = data.url;
-				uploadedPublicId = data.public_id;
-				console.log('Uploaded:', data);
+			if (results.length > 0) {
+				message = `Upload berhasil: ${results.length} file ke folder ${category}`;
+				console.log('Uploaded:', results);
 
 				// Reset form
-				file = null;
+				files = [];
 				filename = '';
 			}
 		} catch (error) {
@@ -80,16 +115,35 @@
 			<div class="space-y-0">
 				<PrefixInput bind:prefix disabled={uploading} />
 				<CategorySelector bind:category disabled={uploading} />
-				<FilenameInput bind:filename disabled={uploading} originalFilename={file?.name || ''} />
+				<FilenameInput bind:filename {category} disabled={uploading} />
 				<FolderPreview {prefix} {category} />
 			</div>
 
 			<!-- Right Column -->
 			<div>
-				<FileUploadArea bind:file disabled={uploading} onUpload={upload} />
+				<FileUploadArea bind:files {category} disabled={uploading} onUpload={upload} />
 			</div>
 		</div>
 
-		<UploadResults bind:message {uploadedUrl} {uploadedPublicId} />
+		<UploadResults
+			bind:message
+			uploadedUrl={uploadedUrls[0] || ''}
+			uploadedPublicId={uploadedPublicIds[0] || ''}
+		/>
+
+		<!-- Show all uploaded URLs for list categories -->
+		{#if uploadedUrls.length > 1}
+			<div class="mt-4 rounded-lg border border-green-200 bg-green-50 p-4">
+				<h3 class="mb-2 font-semibold text-green-900">Uploaded Files ({uploadedUrls.length}):</h3>
+				<div class="space-y-1">
+					{#each uploadedUrls as url, index}
+						<div class="flex items-center gap-2 text-sm">
+							<span class="font-mono text-green-700">{index + 1}.</span>
+							<a href={url} target="_blank" class="truncate text-blue-600 hover:underline">{url}</a>
+						</div>
+					{/each}
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>

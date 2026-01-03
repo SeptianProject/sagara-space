@@ -1,10 +1,30 @@
 <script>
+	// @ts-ignore
+	import { getCloudinaryUrl, extractPublicId, CloudinaryPresets } from '$lib/utils/cloudinary';
+
 	export let message = '';
 	export let uploadedUrl = '';
 	export let uploadedPublicId = '';
 
 	let showModal = false;
 	let lastUploadedUrl = '';
+	let selectedPreset = 'gallery';
+
+	// Generate optimized URLs for different presets
+	$: optimizedUrls = uploadedPublicId
+		? {
+				thumbnail: getCloudinaryUrl(uploadedPublicId, 'thumbnail'),
+				card: getCloudinaryUrl(uploadedPublicId, 'card'),
+				gallery: getCloudinaryUrl(uploadedPublicId, 'gallery'),
+				hero: getCloudinaryUrl(uploadedPublicId, 'hero'),
+				menu: getCloudinaryUrl(uploadedPublicId, 'menu'),
+				fullOptimized: getCloudinaryUrl(uploadedPublicId, 'fullOptimized'),
+				auto: getCloudinaryUrl(uploadedPublicId, 'auto')
+			}
+		: {};
+
+// @ts-ignore
+		$: currentOptimizedUrl = optimizedUrls[selectedPreset] || uploadedUrl;
 
 	// @ts-ignore
 	function copyToClipboard(text) {
@@ -24,7 +44,8 @@
 	}
 
 	// Auto open modal when new upload succeeds
-	$: if (uploadedUrl && uploadedUrl !== lastUploadedUrl) {
+// @ts-ignore
+		$: if (uploadedUrl && uploadedUrl !== lastUploadedUrl) {
 		lastUploadedUrl = uploadedUrl;
 		showModal = true;
 	}
@@ -102,10 +123,33 @@
 			<!-- Image Preview -->
 			<div class="flex justify-center p-6 pb-4">
 				<img
-					src={uploadedUrl}
+					src={currentOptimizedUrl}
 					alt="Uploaded"
 					class="max-h-64 w-auto rounded-lg border border-gray-200 object-contain shadow-sm"
 				/>
+			</div>
+
+			<!-- Preset Selector -->
+			<div class="border-t border-gray-200 px-6 pt-4">
+				<!-- svelte-ignore a11y_label_has_associated_control -->
+				<label class="mb-2 block text-xs font-semibold tracking-wider text-gray-500 uppercase"
+					>Optimization Preset</label
+				>
+				<select
+					bind:value={selectedPreset}
+					class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					<option value="auto">Auto (q_auto, f_auto)</option>
+					<option value="thumbnail">Thumbnail (150x150)</option>
+					<option value="card">Card (400x300)</option>
+					<option value="gallery">Gallery (800x600)</option>
+					<option value="hero">Hero (1920x1080)</option>
+					<option value="menu">Menu (600x400)</option>
+					<option value="fullOptimized">Full Optimized (1600px)</option>
+				</select>
+				<p class="mt-1 text-xs text-gray-500">
+					Pilih preset untuk melihat URL yang sudah dioptimasi
+				</p>
 			</div>
 
 			<!-- URL Fields -->
@@ -113,7 +157,7 @@
 				<div>
 					<!-- svelte-ignore a11y_label_has_associated_control -->
 					<label class="mb-2 block text-xs font-semibold tracking-wider text-gray-500 uppercase"
-						>Image URL</label
+						>Original URL</label
 					>
 					<div class="flex gap-2">
 						<input
@@ -137,6 +181,39 @@
 							Copy
 						</button>
 					</div>
+				</div>
+
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<!-- svelte-ignore a11y_label_has_associated_control -->
+					<label class="mb-2 block text-xs font-semibold tracking-wider text-blue-700 uppercase"
+						>✨ Optimized URL (Recommended)</label
+					>
+					<div class="flex gap-2">
+						<input
+							type="text"
+							value={currentOptimizedUrl}
+							readonly
+							class="flex-1 rounded-lg border border-blue-300 bg-white px-3 py-2 font-mono text-sm text-gray-700 focus:outline-none"
+						/>
+						<button
+							class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-blue-700"
+							on:click={() => copyToClipboard(currentOptimizedUrl)}
+						>
+							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+								></path>
+							</svg>
+							Copy
+						</button>
+					</div>
+					<p class="mt-2 text-xs text-blue-700">
+						<strong>💡 Gunakan URL ini untuk performa optimal!</strong> Auto-optimized dengan format WebP,
+						quality auto, dan ukuran sesuai preset.
+					</p>
 				</div>
 
 				<div>

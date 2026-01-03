@@ -1,16 +1,10 @@
 <script>
+	import { CATEGORY_CONFIGS } from '$lib/config/categories';
+
 	export let category = 'gallery';
 	export let disabled = false;
 
-	const categories = [
-		{ value: 'gallery', label: 'Gallery' },
-		{ value: 'menu', label: 'Menu' },
-		{ value: 'hero', label: 'Hero' },
-		{ value: 'about', label: 'About' },
-		{ value: 'logos', label: 'Logos' },
-		{ value: 'backgrounds', label: 'Backgrounds' },
-		{ value: 'uploads', label: 'Other' }
-	];
+	const categories = CATEGORY_CONFIGS;
 </script>
 
 <div class="mb-5">
@@ -25,8 +19,12 @@
 					: 'border-gray-300 bg-white text-gray-700 hover:border-blue-500 hover:bg-blue-50'} disabled:cursor-not-allowed disabled:opacity-50"
 				on:click={() => (category = cat.value)}
 				{disabled}
+				title={cat.description || ''}
 			>
 				{cat.label}
+				{#if cat.type === 'list'}
+					<span class="ml-1 text-xs opacity-75">(Multiple)</span>
+				{/if}
 			</button>
 		{/each}
 	</div>

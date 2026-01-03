@@ -1,6 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import cloudinary from '$lib/server/cloudinary';
+import { VALID_CATEGORIES, isCategoryList } from '$lib/config/categories';
 import type { RequestHandler } from './$types';
+
+/**
+ * Get next available number for list category files
+ */
+async function getNextFileNumber(prefix: string, category: string): Promise<number> {
+	try {
+		const folderPath = `${prefix}/${category}`;
+		const result = await cloudinary.api.resources({
+			type: 'upload',
+			prefix: folderPath,
+			max_results: 500
+		});
+
+		// Find existing numbered files
+		const numbers = result.resources
+			.map((resource: any) => {
+				const publicId = resource.public_id;
+				const filename = publicId.split('/').pop() || '';
+				// Match pattern: category-1, category-2, etc.
+				const match = filename.match(new RegExp(`^${category}-(\\d+)$`));
+				return match ? parseInt(match[1], 10) : 0;
+			})
+			.filter((num: number) => num > 0);
+
+		// Return next number (max + 1, or 1 if none exist)
+		return numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
+	} catch (error) {
+		console.error('Error getting next file number:', error);
+		return 1; // Default to 1 if error occurs
+	}
+}
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
@@ -9,6 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const prefix = (data.get('prefix') as string) || 'uploads';
 		const category = (data.get('category') as string) || 'uploads';
 		const customFilename = data.get('filename') as string;
+		const fileIndex = data.get('fileIndex') as string;
 
 		if (!file) {
 			return Response.json({ error: 'File tidak ditemukan' }, { status: 400 });
@@ -29,10 +62,9 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 
 		// Validasi kategori/folder
-		const validCategories = ['gallery', 'menu', 'hero', 'about', 'logos', 'backgrounds', 'uploads'];
-		if (!validCategories.includes(category)) {
+		if (!VALID_CATEGORIES.includes(category)) {
 			return Response.json(
-				{ error: `Kategori tidak valid. Pilih dari: ${validCategories.join(', ')}` },
+				{ error: `Kategori tidak valid. Pilih dari: ${VALID_CATEGORIES.join(', ')}` },
 				{ status: 400 }
 			);
 		}
@@ -54,21 +86,44 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const buffer = await Buffer.from(await file.arrayBuffer());
 
-		// Prepare upload options
+		// Prepare upload options with optimization
 		const uploadOptions: any = {
 			folder: `${prefix}/${category}`,
-			resource_type: 'image'
+			resource_type: 'image',
+			use_filename: false,
+			// Eager transformations - pre-generate optimized versions
+			eager: [
+				// Auto-optimized version
+				{ quality: 'auto', fetch_format: 'auto' },
+				// Thumbnail
+				{ width: 150, height: 150, crop: 'fill', quality: 'auto', fetch_format: 'auto' },
+				// Card/medium size
+				{ width: 400, height: 300, crop: 'fill', quality: 'auto', fetch_format: 'auto' },
+				// Gallery size
+				{ width: 800, height: 600, crop: 'fill', quality: 'auto', fetch_format: 'auto' },
+				// Large optimized
+				{ width: 1600, quality: 'auto', fetch_format: 'auto' }
+			],
+			eager_async: true, // Generate transformations asynchronously (faster upload)
+			// Quality and format settings for original upload
+			quality: 'auto:good', // Auto quality with good baseline
+			fetch_format: 'auto' // Auto format (WebP for modern browsers)
 		};
 
-		// Add custom filename if provided
-		if (customFilename && customFilename.trim() !== '') {
-			// Sanitize filename
-			const sanitized = customFilename
-				.trim()
-				.replace(/[^a-zA-Z0-9_-]/g, '-')
-				.toLowerCase();
+		// Determine filename based on category type
+		const isListCat = isCategoryList(category);
+
+		if (isListCat) {
+			// List category: auto-number files (menu-1, menu-2, gallery-1, etc.)
+			const nextNumber = await getNextFileNumber(prefix, category);
+			uploadOptions.public_id = `${category}-${nextNumber}`;
+			uploadOptions.overwrite = false; // Don't overwrite existing files
+		} else {
+			// Single category: use category name or custom filename
+			const finalFilename = customFilename?.trim() || category;
+			const sanitized = finalFilename.replace(/[^a-zA-Z0-9_-]/g, '-').toLowerCase();
 			uploadOptions.public_id = sanitized;
-			uploadOptions.use_filename = false;
+			uploadOptions.overwrite = true; // Overwrite existing file for single categories
 		}
 
 		const result = await new Promise<any>((resolve, reject) => {
@@ -83,9 +138,14 @@ export const POST: RequestHandler = async ({ request }) => {
 		return Response.json({
 			success: true,
 			url: result.secure_url,
+			optimizedUrl: result.eager?.[0]?.secure_url || result.secure_url, // First eager transformation
 			public_id: result.public_id,
 			prefix: prefix,
-			category: category
+			category: category,
+			filename: uploadOptions.public_id,
+			isListCategory: isListCat,
+			// Include all eager transformation URLs if needed
+			transformations: result.eager?.map((e: any) => e.secure_url) || []
 		});
 	} catch (error: any) {
 		console.error('Upload error:', error);
