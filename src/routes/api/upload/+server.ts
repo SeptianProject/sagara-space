@@ -6,10 +6,25 @@ export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const data = await request.formData();
 		const file = data.get('file') as File;
+		const prefix = (data.get('prefix') as string) || 'uploads';
 		const category = (data.get('category') as string) || 'uploads';
 
 		if (!file) {
 			return Response.json({ error: 'File tidak ditemukan' }, { status: 400 });
+		}
+
+		// Validasi prefix
+		if (!prefix || prefix.trim() === '') {
+			return Response.json({ error: 'Prefix tidak boleh kosong' }, { status: 400 });
+		}
+
+		// Validasi prefix format (hanya huruf, angka, dash, underscore)
+		const prefixRegex = /^[a-zA-Z0-9_-]+$/;
+		if (!prefixRegex.test(prefix)) {
+			return Response.json(
+				{ error: 'Prefix hanya boleh mengandung huruf, angka, dash (-), dan underscore (_)' },
+				{ status: 400 }
+			);
 		}
 
 		// Validasi kategori/folder
@@ -42,7 +57,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			cloudinary.uploader
 				.upload_stream(
 					{
-						folder: `rihat/${category}`,
+						folder: `${prefix}/${category}`,
 						resource_type: 'image'
 					},
 					(error, result) => {
@@ -57,6 +72,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			success: true,
 			url: result.secure_url,
 			public_id: result.public_id,
+			prefix: prefix,
 			category: category
 		});
 	} catch (error: any) {
