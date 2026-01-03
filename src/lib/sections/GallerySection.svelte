@@ -17,6 +17,7 @@
 	<!-- card carousel -->
 	<div class="overflow-hidde flex gap-8">
 		{#each galleryImages as gallery}
+			<!-- svelte-ignore a11y_img_redundant_alt -->
 			<img src={gallery} alt="Gallery Image" class="h-130 w-80 object-cover object-center shadow-md" />
 		{/each}
 	</div>
