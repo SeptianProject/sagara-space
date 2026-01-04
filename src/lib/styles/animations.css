@@ -1,0 +1,128 @@
+/* Initial state untuk elemen yang akan di-animate */
+.animate-on-scroll {
+	opacity: 0;
+	transition:
+		opacity 0.6s ease-out,
+		transform 0.6s ease-out;
+}
+
+/* State ketika elemen masuk viewport */
+.animate-on-scroll.in-view {
+	opacity: 1;
+	transform: none !important;
+}
+
+/* Fade in animation */
+.fade-in {
+	opacity: 0;
+}
+
+.fade-in.in-view {
+	opacity: 1;
+}
+
+/* Slide up animation */
+.slide-up {
+	opacity: 0;
+	transform: translateY(30px);
+}
+
+.slide-up.in-view {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Slide down animation */
+.slide-down {
+	opacity: 0;
+	transform: translateY(-30px);
+}
+
+.slide-down.in-view {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Slide left animation */
+.slide-left {
+	opacity: 0;
+	transform: translateX(30px);
+}
+
+.slide-left.in-view {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/* Slide right animation */
+.slide-right {
+	opacity: 0;
+	transform: translateX(-30px);
+}
+
+.slide-right.in-view {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/* Scale in animation */
+.scale-in {
+	opacity: 0;
+	transform: scale(0.95);
+}
+
+.scale-in.in-view {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Stagger animations untuk list items */
+.stagger-item {
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.5s ease-out,
+		transform 0.5s ease-out;
+}
+
+.stagger-item.in-view {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Delay classes untuk stagger effect */
+.delay-100 {
+	transition-delay: 100ms;
+}
+
+.delay-200 {
+	transition-delay: 200ms;
+}
+
+.delay-300 {
+	transition-delay: 300ms;
+}
+
+.delay-400 {
+	transition-delay: 400ms;
+}
+
+.delay-500 {
+	transition-delay: 500ms;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+	.animate-on-scroll,
+	.fade-in,
+	.slide-up,
+	.slide-down,
+	.slide-left,
+	.slide-right,
+	.scale-in,
+	.stagger-item {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+	}
+}

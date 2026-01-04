@@ -1,4 +1,5 @@
 <script>
+	import { inView } from '$lib/utils/animations';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	const mapLocation = getCloudinaryUrl('rihat/uploads/map-location.webp', 'fullOptimized');
 
@@ -25,18 +26,18 @@
 <section>
 	<div class="mt-40 space-y-20 px-20">
 		<!-- title -->
-		<div class="flex flex-col items-center gap-2 text-center">
+		<div class="slide-up animate-on-scroll flex flex-col items-center gap-2 text-center" use:inView>
 			<h1 class="text-4xl font-bold text-[#333333]">Information & Location</h1>
 			<p class="text-lg text-[#333333]/70">Lorem Ipsum Sit Dolor Amet Concestur</p>
 		</div>
 		<!-- content -->
 		<div class="flex items-center justify-between gap-20">
 			<!-- map location -->
-			<div class="h-full w-1/2">
+			<div class="slide-left animate-on-scroll h-full w-1/2" use:inView={{ threshold: 0.3 }}>
 				<img src={mapLocation} alt="Map Location" />
 			</div>
 			<!-- timeline & button -->
-			<div class="">
+			<div class="slide-right animate-on-scroll" use:inView={{ threshold: 0.3 }}>
 				<!-- timeline -->
 				<div>
 					{#each infoItems as item}
@@ -61,12 +62,12 @@
 				<!-- button outline -->
 				<div class="ml-16 flex items-center gap-2">
 					<button
-						class="cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-12 py-2 font-semibold text-[#592602] transition-all duration-300 hover:bg-[#592602] hover:text-white"
+						class="btn-outline cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-12 py-2 font-semibold text-[#592602] transition-all duration-300"
 					>
 						Gofood
 					</button>
 					<button
-						class="cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-12 py-2 font-semibold text-[#592602] transition-all duration-300 hover:bg-[#592602] hover:text-white"
+						class="btn-outline cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-12 py-2 font-semibold text-[#592602] transition-all duration-300"
 					>
 						Shopeefood
 					</button>

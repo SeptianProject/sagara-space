@@ -1,0 +1,226 @@
+/* Navbar Link Hover Effects */
+.nav-link {
+	position: relative;
+	display: inline-block;
+	padding-bottom: 4px;
+}
+
+.nav-link::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: linear-gradient(90deg, #473bf0, #ffffff);
+	transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+	width: 100%;
+}
+
+.nav-link:hover {
+	transform: translateY(-2px);
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Logo Hover Effect */
+.logo-hover {
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-hover:hover {
+	transform: scale(1.1) rotate(5deg);
+	filter: drop-shadow(0 0 15px rgba(71, 59, 240, 0.5));
+}
+
+/* Primary Button Hover (Hero Section) */
+.btn-primary {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.btn-primary::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+	transition: left 0.5s ease;
+	z-index: -1;
+}
+
+.btn-primary:hover::before {
+	left: 100%;
+}
+
+.btn-primary:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 25px rgba(71, 59, 240, 0.4);
+}
+
+.btn-primary:active {
+	transform: translateY(-1px);
+	box-shadow: 0 5px 15px rgba(71, 59, 240, 0.3);
+}
+
+/* Outline Button Hover */
+.btn-outline {
+	position: relative;
+	overflow: hidden;
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-outline::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: #592602;
+	transition:
+		width 0.5s ease,
+		height 0.5s ease,
+		top 0.5s ease,
+		left 0.5s ease;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+}
+
+.btn-outline:hover::before {
+	width: 300%;
+	height: 300%;
+}
+
+.btn-outline:hover {
+	transform: translateY(-3px) scale(1.02);
+	box-shadow: 0 8px 20px rgba(89, 38, 2, 0.3);
+	border-color: #592602;
+	color: white;
+}
+
+.btn-outline:active {
+	transform: translateY(-1px) scale(1);
+}
+
+/* Icon Animation in Buttons */
+.btn-icon {
+	transition: transform 0.3s ease;
+}
+
+.btn-primary:hover .btn-icon,
+.btn-outline:hover .btn-icon {
+	transform: translateX(5px);
+	animation: bounce-right 0.5s ease;
+}
+
+@keyframes bounce-right {
+	0%,
+	100% {
+		transform: translateX(5px);
+	}
+	50% {
+		transform: translateX(10px);
+	}
+}
+
+/* Gallery Image Hover */
+.gallery-img-hover {
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	cursor: pointer;
+}
+
+.gallery-img-hover:hover {
+	transform: scale(1.05) translateY(-10px);
+	box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+	z-index: 10;
+}
+
+/* Menu Card Enhanced Hover */
+.menu-card-hover {
+	transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.menu-card-hover:hover {
+	transform: translateY(-8px) scale(1.02);
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.menu-card-hover:hover .menu-card-img {
+	transform: scale(1.05);
+}
+
+.menu-card-img {
+	transition: transform 0.5s ease;
+}
+
+/* Footer Link Hover */
+.footer-link {
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+.footer-link::after {
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: #592602;
+	transition: width 0.3s ease;
+}
+
+.footer-link:hover::after {
+	width: 100%;
+}
+
+.footer-link:hover {
+	color: #592602;
+	transform: translateX(5px);
+}
+
+/* Loading Button Effect */
+.btn-loading {
+	position: relative;
+}
+
+.btn-loading:hover {
+	animation: pulse-shadow 1.5s infinite;
+}
+
+@keyframes pulse-shadow {
+	0%,
+	100% {
+		box-shadow: 0 0 0 0 rgba(71, 59, 240, 0.4);
+	}
+	50% {
+		box-shadow: 0 0 0 15px rgba(71, 59, 240, 0);
+	}
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+a {
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* Accessibility - Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+	.nav-link::after,
+	.btn-primary::before,
+	.btn-outline::before,
+	.btn-icon,
+	.gallery-img-hover,
+	.menu-card-hover,
+	.footer-link::after {
+		transition: none;
+		animation: none;
+	}
+}

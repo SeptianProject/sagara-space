@@ -1,5 +1,7 @@
 <script lang="ts">
 	import './layout.css';
+	import '$lib/styles/animations.css';
+	import '$lib/styles/hover-effects.css';
 	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();
