@@ -18,7 +18,7 @@
 	let message = '';
 	let uploadedUrls = [];
 	let uploadedPublicIds = [];
-	let uploadedOptimizedUrls = []; // New: for optimized URLs
+	let uploadedOptimizedUrls = [];
 
 	$: isListCategory = isCategoryList(category);
 
@@ -53,7 +53,6 @@
 				form.append('prefix', prefix);
 				form.append('category', category);
 
-				// For list categories, use auto-numbering; for single, use category name
 				if (isListCategory) {
 					// The server will handle numbering based on existing files
 					form.append('fileIndex', (i + 1).toString());

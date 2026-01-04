@@ -47,12 +47,6 @@ export const CATEGORY_CONFIGS: CategoryConfig[] = [
 		description: 'Logo image'
 	},
 	{
-		value: 'backgrounds',
-		label: 'Backgrounds',
-		type: 'list',
-		description: 'Background image'
-	},
-	{
 		value: 'uploads',
 		label: 'Other',
 		type: 'single',

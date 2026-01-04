@@ -1,5 +1,6 @@
 <script>
-	import mapLocation from '$lib/assets/rihat/map.webp';
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+	const mapLocation = getCloudinaryUrl('rihat/uploads/map-location.webp', 'fullOptimized');
 
 	const infoItems = [
 		{
@@ -42,7 +43,7 @@
 						<div class="mb-8 flex items-start gap-6">
 							<!-- number -->
 							<div
-								class="flex h-10 w-10 items-center justify-center rounded-full bg-[#473BF0]/10 p-6	 text-[#592602]"
+								class="flex h-10 w-10 items-center justify-center rounded-full bg-[#473BF0]/10 p-6 text-[#592602]"
 							>
 								<h4 class="text-lg font-medium">{item.number}</h4>
 							</div>

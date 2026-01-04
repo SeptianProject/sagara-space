@@ -1,8 +1,10 @@
 <script>
-	import coffeeImage from '$lib/assets/rihat/about.webp';
-	import mochaLatte from '$lib/assets/rihat/menu/mocha-latte.webp';
-	import rihatKopiSusu from '$lib/assets/rihat/menu/rihat-kopi-susu.webp';
-	import roseMatcha from '$lib/assets/rihat/menu/rose-matcha.webp';
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+
+	const coffeeImage = getCloudinaryUrl('rihat/about/about.webp', 'fullOptimized');
+	const rihatKopiSusu = getCloudinaryUrl('rihat/menu/rihat-kopi-susu.webp', 'fullOptimized');
+	const mochaLatte = getCloudinaryUrl('rihat/menu/mocha-latte.webp', 'fullOptimized');
+	const roseMatcha = getCloudinaryUrl('rihat/menu/rose-matcha.webp', 'fullOptimized');
 
 	const cardMenus = [
 		{
@@ -50,7 +52,7 @@
 	</div>
 
 	<!-- best menu's -->
-	<div class="flex flex-col items-center justify-center gap-8 mt-40">
+	<div class="mt-40 flex flex-col items-center justify-center gap-8">
 		<!-- title -->
 		<div class="flex flex-col items-center gap-2 text-center">
 			<h1 class="text-4xl font-bold text-[#333333]">Our Best Menu’s</h1>

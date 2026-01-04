@@ -1,14 +1,16 @@
 <script>
-	import galleryImage1 from '$lib/assets/rihat/gallery/image1.webp';
-	import galleryImage2 from '$lib/assets/rihat/gallery/image2.webp';
-	import galleryImage3 from '$lib/assets/rihat/gallery/image3.webp';
-	import galleryImage4 from '$lib/assets/rihat/gallery/image4.webp';
-	import galleryImage5 from '$lib/assets/rihat/gallery/image5.webp';
+	import { env } from '$env/dynamic/public';
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 
+	const galleryImage1 = getCloudinaryUrl('rihat/gallery/gallery-1.webp', 'fullOptimized');
+	const galleryImage2 = getCloudinaryUrl('rihat/gallery/gallery-2.webp', 'fullOptimized');
+	const galleryImage3 = getCloudinaryUrl('rihat/gallery/gallery-3.webp', 'fullOptimized');
+	const galleryImage4 = getCloudinaryUrl('rihat/gallery/gallery-4.webp', 'fullOptimized');
+	const galleryImage5 = getCloudinaryUrl('rihat/gallery/gallery-5.webp', 'fullOptimized');
 	const galleryImages = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 </script>
 
-<section class="mt-40 space-y-14 flex flex-col items-center justify-center">
+<section class="mt-40 flex flex-col items-center justify-center space-y-14">
 	<!-- title -->
 	<div class="flex flex-col items-center justify-center text-center">
 		<h4 class="text-lg text-[#333333]/80">Ukir Cerita Bersama Rihat</h4>
@@ -18,7 +20,11 @@
 	<div class="overflow-hidde flex gap-8">
 		{#each galleryImages as gallery}
 			<!-- svelte-ignore a11y_img_redundant_alt -->
-			<img src={gallery} alt="Gallery Image" class="h-130 w-80 object-cover object-center shadow-md" />
+			<img
+				src={gallery}
+				alt="Gallery Image"
+				class="h-130 w-80 object-cover object-center shadow-md"
+			/>
 		{/each}
 	</div>
 	<!-- button outline -->

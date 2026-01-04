@@ -1,5 +1,7 @@
 <script>
-	import logo from '$lib/assets/rihat/logo.webp';
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+
+	const logo = getCloudinaryUrl('rihat/logo/logo.webp', 'thumbnail');
 
 	const navItems = [
 		{ name: 'Home', href: '#' },

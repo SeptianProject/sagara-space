@@ -1,7 +1,9 @@
 <script>
-	import background from '$lib/assets/rihat/background.webp';
 	import arrowRight from '$lib/assets/rihat/arrow-right.svg';
 	import Navbar from '$lib/layouts/Navbar.svelte';
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+
+	const background = getCloudinaryUrl('rihat/hero/hero.webp', 'fullOptimized');
 </script>
 
 <!-- hero section -->
