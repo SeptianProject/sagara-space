@@ -19,6 +19,12 @@
 		--radius-lg: 16px;
 	}
 
+	/* Smooth scroll behavior */
+	html {
+		scroll-behavior: smooth;
+		scroll-padding-top: 80px; /* Offset untuk navbar */
+	}
+
 	/* Apply fonts to elements */
 	body {
 		font-family: var(--font-body);

@@ -86,6 +86,7 @@
 </script>
 
 <section
+	id="menu"
 	class="mt-20 space-y-12 px-4 sm:mt-32 sm:space-y-16 sm:px-8 md:mt-40 md:space-y-20 md:px-20"
 >
 	<!-- text description / image -->
@@ -103,11 +104,12 @@
 				dari sekadar minuman, sebuah pelukan hangat dalam cangkir.
 			</p>
 			<!-- button outline -->
-			<button
-				class="btn-outline mt-2 w-full cursor-pointer rounded-md border-2 border-[#592602] bg-transparent px-8 py-2.5 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-16"
+			<a
+				href="#menu-list"
+				class="btn-outline mt-2 w-full cursor-pointer rounded-md border-2 border-[#592602] bg-transparent px-8 py-2.5 text-center font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-16"
 			>
 				Lihat Menu
-			</button>
+			</a>
 		</div>
 		<!-- image -->
 		<div class="slide-left animate-on-scroll w-full md:w-1/2" use:inView={{ threshold: 0.3 }}>
@@ -116,7 +118,10 @@
 	</div>
 
 	<!-- best menu's -->
-	<div class="mt-20 flex flex-col items-center justify-center gap-6 sm:mt-32 sm:gap-8 md:mt-40">
+	<div
+		id="menu-list"
+		class="mt-20 flex flex-col items-center justify-center gap-6 sm:mt-32 sm:gap-8 md:mt-40"
+	>
 		<!-- title -->
 		<div
 			class="slide-up animate-on-scroll flex flex-col items-center gap-1 text-center sm:gap-2"
@@ -141,11 +146,12 @@
 			</MenuCarousel>
 		</div>
 		<!-- button outline  -->
-		<button
-			class="btn-outline scale-in animate-on-scroll mt-2 w-full cursor-pointer border-2 border-[#592602] bg-transparent px-8 py-2.5 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-16"
+		<a
+			href="#location"
+			class="btn-outline scale-in animate-on-scroll mt-2 w-full cursor-pointer border-2 border-[#592602] bg-transparent px-8 py-2.5 text-center font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-16"
 			use:inView
 		>
 			Menu Lainnya
-		</button>
+		</a>
 	</div>
 </section>

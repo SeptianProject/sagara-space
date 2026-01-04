@@ -23,7 +23,7 @@
 	];
 </script>
 
-<section>
+<section id="location">
 	<div class="mt-20 space-y-12 px-4 sm:mt-32 sm:space-y-16 sm:px-8 md:mt-40 md:space-y-20 md:px-20">
 		<!-- title -->
 		<div
@@ -69,16 +69,22 @@
 				</div>
 				<!-- button outline -->
 				<div class="mt-6 flex flex-col items-center gap-2 sm:ml-12 sm:flex-row md:mt-0 md:ml-16">
-					<button
-						class="btn-outline w-full cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-8 py-2 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-12"
+					<a
+						href="https://gofood.co.id"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-outline w-full cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-8 py-2 text-center font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-12"
 					>
 						Gofood
-					</button>
-					<button
-						class="btn-outline w-full cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-8 py-2 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-12"
+					</a>
+					<a
+						href="https://shopee.co.id/food"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-outline w-full cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-8 py-2 text-center font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-12"
 					>
 						Shopeefood
-					</button>
+					</a>
 				</div>
 			</div>
 		</div>

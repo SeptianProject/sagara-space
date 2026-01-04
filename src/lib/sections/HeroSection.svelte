@@ -15,6 +15,7 @@
 
 <!-- hero section -->
 <section
+id="home"
 	class="relative size-full min-h-screen space-y-8 overflow-hidden sm:space-y-12 md:space-y-20"
 >
 	<img
@@ -49,13 +50,14 @@
 				santaimu menjadi lebih bermakna.
 			</p>
 			<!-- button default -->
-			<button
+			<a
+				href="#menu"
 				class="btn-primary group mt-8 flex w-full max-w-xs cursor-pointer items-center justify-between rounded-md bg-[#473BF0] px-6 py-3 font-semibold text-white transition-all duration-300 sm:px-8 sm:py-4 md:mt-20 md:w-80"
 				in:fly={{ y: 30, duration: 700, delay: 800 }}
 			>
 				Eksplore Rihat
 				<img src={arrowRight} alt="arrow right" class="btn-icon size-4 object-cover select-none" />
-			</button>
+			</a>
 		</div>
 	{/if}
 </section>

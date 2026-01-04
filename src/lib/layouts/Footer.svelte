@@ -2,15 +2,15 @@
 	import { inView } from '$lib/utils/animations';
 
 	const linkMenus = [
-		{ name: 'Home', href: '#' },
-		{ name: 'Menu', href: '#' },
-		{ name: 'Order', href: '#' },
-		{ name: 'Customer', href: '#' }
+		{ name: 'Home', href: '#hero' },
+		{ name: 'Menu', href: '#menu' },
+		{ name: 'Location', href: '#location' },
+		{ name: 'Gallery', href: '#gallery' }
 	];
 
 	const helpMenus = [
-		{ name: 'Payment Options', href: '#' },
-		{ name: 'Customer Service', href: '#' }
+		{ name: 'Order Online', href: '#location' },
+		{ name: 'Contact Us', href: '#location' }
 	];
 
 	const year = new Date().getFullYear();
@@ -33,7 +33,7 @@
 			use:inView
 		>
 			<h4 class="font-medium text-[#9F9F9F]">Links</h4>
-			<div class="flex flex-col gap-4 sm:gap-6 md:gap-10">
+			<div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
 				{#each linkMenus as item}
 					<a href={item.href} class="footer-link w-fit font-medium">{item.name}</a>
 				{/each}
@@ -44,7 +44,7 @@
 			use:inView
 		>
 			<h4 class="font-medium text-[#9F9F9F]">Help</h4>
-			<div class="flex flex-col gap-4 sm:gap-6 md:gap-10">
+			<div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
 				{#each helpMenus as item}
 					<a href={item.href} class="footer-link w-fit font-medium">{item.name}</a>
 				{/each}

@@ -5,10 +5,10 @@
 	const logo = getCloudinaryUrl('rihat/logo/logo.webp', 'thumbnail');
 
 	const navItems = [
-		{ name: 'Home', href: '#' },
-		{ name: 'About', href: '#about' },
-		{ name: 'Services', href: '#services' },
-		{ name: 'Contact', href: '#contact' }
+		{ name: 'Home', href: '#hero' },
+		{ name: 'Menu', href: '#menu' },
+		{ name: 'Location', href: '#location' },
+		{ name: 'Gallery', href: '#gallery' }
 	];
 
 	let mobileMenuOpen = $state(false);
@@ -19,7 +19,7 @@
 </script>
 
 <nav
-	class="relative z-20 flex w-full items-center justify-between gap-4 px-4 pt-8 sm:gap-8 sm:px-8 md:gap-14 md:px-20 md:pt-16"
+	class="relative z-20 flex w-full items-center justify-between gap-4 px-4 pt-8 sm:gap-8 sm:px-8 md:justify-end md:gap-14 md:px-20 md:pt-16"
 	in:fade={{ duration: 600, delay: 200 }}
 >
 	<!-- Mobile Menu Button -->
@@ -46,7 +46,7 @@
 	</button>
 
 	<!-- Desktop Menu -->
-	<ul class="hidden gap-6 md:flex lg:gap-14">
+	<ul class="hidden gap-6 md:flex md:justify-end lg:gap-14">
 		{#each navItems as item, i}
 			<li in:fly={{ y: -20, duration: 500, delay: 300 + i * 100 }}>
 				<a
@@ -60,34 +60,47 @@
 	</ul>
 
 	<!-- Logo -->
-	<img
-		src={logo}
-		alt="logo"
-		class="logo-hover z-20 size-12 cursor-pointer object-cover sm:size-14 md:size-16"
-		in:fly={{ x: 20, duration: 500, delay: 700 }}
-	/>
+	<a href="#hero" class="z-20">
+		<img
+			src={logo}
+			alt="logo"
+			class="logo-hover size-12 cursor-pointer object-cover sm:size-14 md:size-16"
+			in:fly={{ x: 20, duration: 500, delay: 700 }}
+		/>
+	</a>
 
 	<!-- Mobile Menu Overlay -->
 	{#if mobileMenuOpen}
-		<button
-			type="button"
+		<div
 			class="fixed inset-0 z-10 bg-black/90 md:hidden"
 			transition:fade={{ duration: 300 }}
-			onclick={toggleMobileMenu}
+			role="dialog"
+			aria-modal="true"
 		>
-			<ul class="flex h-full flex-col items-center justify-center gap-8">
+			<!-- Close overlay on background click -->
+			<button
+				type="button"
+				class="absolute inset-0"
+				onclick={toggleMobileMenu}
+				aria-label="Close menu"
+			></button>
+
+			<!-- Menu content -->
+			<ul class="relative z-10 flex h-full flex-col items-center justify-center gap-8">
 				{#each navItems as item, i}
 					<li transition:fly={{ y: -20, duration: 400, delay: i * 100 }}>
 						<a
 							href={item.href}
 							class="nav-link text-2xl text-white transition-all duration-300"
-							onclick={toggleMobileMenu}
+							onclick={(e) => {
+								toggleMobileMenu();
+							}}
 						>
 							{item.name}
 						</a>
 					</li>
 				{/each}
 			</ul>
-		</button>
+		</div>
 	{/if}
 </nav>

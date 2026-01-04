@@ -71,42 +71,18 @@
 /* Outline Button Hover */
 .btn-outline {
 	position: relative;
-	overflow: hidden;
-	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.btn-outline::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border-radius: 50%;
-	background: #592602;
-	transition:
-		width 0.5s ease,
-		height 0.5s ease,
-		top 0.5s ease,
-		left 0.5s ease;
-	transform: translate(-50%, -50%);
-	z-index: -1;
-}
-
-.btn-outline:hover::before {
-	width: 300%;
-	height: 300%;
+	transition: all 0.3s ease;
 }
 
 .btn-outline:hover {
-	transform: translateY(-3px) scale(1.02);
-	box-shadow: 0 8px 20px rgba(89, 38, 2, 0.3);
-	border-color: #592602;
+	background: #592602;
 	color: white;
+	box-shadow: 0 4px 12px rgba(89, 38, 2, 0.2);
 }
 
 .btn-outline:active {
-	transform: translateY(-1px) scale(1);
+	transform: scale(0.98);
+	box-shadow: 0 2px 6px rgba(89, 38, 2, 0.15);
 }
 
 /* Icon Animation in Buttons */
