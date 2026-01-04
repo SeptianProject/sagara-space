@@ -14,7 +14,9 @@
 </script>
 
 <!-- hero section -->
-<section class="relative size-full min-h-screen space-y-20 overflow-hidden">
+<section
+	class="relative size-full min-h-screen space-y-8 overflow-hidden sm:space-y-12 md:space-y-20"
+>
 	<img
 		src={background}
 		alt="background"
@@ -30,17 +32,17 @@
 
 	{#if mounted}
 		<div
-			class="relative z-10 flex flex-col items-end justify-end px-20 py-20 text-right"
+			class="relative z-10 flex flex-col items-center justify-center px-4 py-10 text-center sm:px-8 md:items-end md:justify-end md:px-20 md:py-20 md:text-right"
 			in:fade={{ duration: 800, delay: 200 }}
 		>
 			<h1
-				class="max-w-220 text-6xl font-bold text-white"
+				class="max-w-full text-3xl font-bold text-white sm:text-4xl md:max-w-220 md:text-5xl lg:text-6xl"
 				in:fly={{ y: 30, duration: 700, delay: 400 }}
 			>
 				Istirahat Sejenak, Nikmati Kehangatan di Rihat.
 			</h1>
 			<p
-				class="mt-5 max-w-200 text-xl font-light text-white/70"
+				class="mt-4 max-w-full text-base font-light text-white/70 sm:text-lg md:mt-5 md:max-w-200 md:text-xl"
 				in:fly={{ y: 30, duration: 700, delay: 600 }}
 			>
 				Dibuat dengan sepenuh hati dari bahan pilihan untuk menemani setiap cerita dan momen
@@ -48,7 +50,7 @@
 			</p>
 			<!-- button default -->
 			<button
-				class="btn-primary group mt-20 flex w-80 cursor-pointer items-center justify-between rounded-md bg-[#473BF0] px-8 py-4 font-semibold text-white transition-all duration-300"
+				class="btn-primary group mt-8 flex w-full max-w-xs cursor-pointer items-center justify-between rounded-md bg-[#473BF0] px-6 py-3 font-semibold text-white transition-all duration-300 sm:px-8 sm:py-4 md:mt-20 md:w-80"
 				in:fly={{ y: 30, duration: 700, delay: 800 }}
 			>
 				Eksplore Rihat

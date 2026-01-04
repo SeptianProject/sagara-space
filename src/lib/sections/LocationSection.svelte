@@ -24,50 +24,58 @@
 </script>
 
 <section>
-	<div class="mt-40 space-y-20 px-20">
+	<div class="mt-20 space-y-12 px-4 sm:mt-32 sm:space-y-16 sm:px-8 md:mt-40 md:space-y-20 md:px-20">
 		<!-- title -->
-		<div class="slide-up animate-on-scroll flex flex-col items-center gap-2 text-center" use:inView>
-			<h1 class="text-4xl font-bold text-[#333333]">Information & Location</h1>
-			<p class="text-lg text-[#333333]/70">Lorem Ipsum Sit Dolor Amet Concestur</p>
+		<div
+			class="slide-up animate-on-scroll flex flex-col items-center gap-1 text-center sm:gap-2"
+			use:inView
+		>
+			<h1 class="text-2xl font-bold text-[#333333] sm:text-3xl md:text-4xl">
+				Information & Location
+			</h1>
+			<p class="text-base text-[#333333]/70 sm:text-lg">Lorem Ipsum Sit Dolor Amet Concestur</p>
 		</div>
 		<!-- content -->
-		<div class="flex items-center justify-between gap-20">
+		<div class="flex flex-col items-center justify-between gap-8 md:flex-row md:gap-20">
 			<!-- map location -->
-			<div class="slide-left animate-on-scroll h-full w-1/2" use:inView={{ threshold: 0.3 }}>
-				<img src={mapLocation} alt="Map Location" />
+			<div
+				class="slide-left animate-on-scroll h-full w-full md:w-1/2"
+				use:inView={{ threshold: 0.3 }}
+			>
+				<img src={mapLocation} alt="Map Location" class="w-full rounded-lg" />
 			</div>
 			<!-- timeline & button -->
-			<div class="slide-right animate-on-scroll" use:inView={{ threshold: 0.3 }}>
+			<div class="slide-right animate-on-scroll w-full md:w-1/2" use:inView={{ threshold: 0.3 }}>
 				<!-- timeline -->
 				<div>
 					{#each infoItems as item}
-						<div class="mb-8 flex items-start gap-6">
+						<div class="mb-6 flex items-start gap-4 md:mb-8 md:gap-6">
 							<!-- number -->
 							<div
-								class="flex h-10 w-10 items-center justify-center rounded-full bg-[#473BF0]/10 p-6 text-[#592602]"
+								class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#473BF0]/10 p-4 text-[#592602] sm:h-10 sm:w-10 sm:p-6"
 							>
-								<h4 class="text-lg font-medium">{item.number}</h4>
+								<h4 class="text-base font-medium sm:text-lg">{item.number}</h4>
 							</div>
 							<!-- description -->
-							<div class="flex flex-col gap-2">
-								<h4 class="text-xl font-bold text-[#333333]">{item.title}</h4>
-								<p class="text-[#333333]/70">{item.description}</p>
+							<div class="flex flex-col gap-1 sm:gap-2">
+								<h4 class="text-lg font-bold text-[#333333] sm:text-xl">{item.title}</h4>
+								<p class="text-sm text-[#333333]/70 sm:text-base">{item.description}</p>
 								{#if item.description2}
-									<p class="text-[#333333]/70">{item.description2}</p>
+									<p class="text-sm text-[#333333]/70 sm:text-base">{item.description2}</p>
 								{/if}
 							</div>
 						</div>
 					{/each}
 				</div>
 				<!-- button outline -->
-				<div class="ml-16 flex items-center gap-2">
+				<div class="mt-6 flex flex-col items-center gap-2 sm:ml-12 sm:flex-row md:mt-0 md:ml-16">
 					<button
-						class="btn-outline cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-12 py-2 font-semibold text-[#592602] transition-all duration-300"
+						class="btn-outline w-full cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-8 py-2 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-12"
 					>
 						Gofood
 					</button>
 					<button
-						class="btn-outline cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-12 py-2 font-semibold text-[#592602] transition-all duration-300"
+						class="btn-outline w-full cursor-pointer rounded-sm border-2 border-[#592602] bg-transparent px-8 py-2 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-12"
 					>
 						Shopeefood
 					</button>

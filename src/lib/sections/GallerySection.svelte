@@ -11,23 +11,25 @@
 	const galleryImages = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 </script>
 
-<section class="mt-40 flex flex-col items-center justify-center space-y-14">
+<section
+	class="mt-20 flex flex-col items-center justify-center space-y-8 px-4 sm:mt-32 sm:space-y-12 sm:px-0 md:mt-40 md:space-y-14"
+>
 	<!-- title -->
 	<div
-		class="slide-up animate-on-scroll flex flex-col items-center justify-center text-center"
+		class="slide-up animate-on-scroll flex flex-col items-center justify-center gap-1 px-4 text-center sm:gap-2"
 		use:inView
 	>
-		<h4 class="text-lg text-[#333333]/80">Ukir Cerita Bersama Rihat</h4>
-		<h1 class="text-4xl font-bold text-[#333333]">#Happy Customer</h1>
+		<h4 class="text-base text-[#333333]/80 sm:text-lg">Ukir Cerita Bersama Rihat</h4>
+		<h1 class="text-2xl font-bold text-[#333333] sm:text-3xl md:text-4xl">#Happy Customer</h1>
 	</div>
 	<!-- card carousel -->
-	<div class="overflow-hidde flex gap-8">
+	<div class="flex w-full gap-4 overflow-x-auto px-4 sm:gap-6 md:gap-8 md:px-8">
 		{#each galleryImages as gallery, i}
 			<!-- svelte-ignore a11y_img_redundant_alt -->
 			<img
 				src={gallery}
 				alt="Gallery Image"
-				class="gallery-img-hover stagger-item animate-on-scroll h-130 w-80 object-cover object-center shadow-md delay-{i *
+				class="gallery-img-hover stagger-item animate-on-scroll h-80 w-64 shrink-0 object-cover object-center shadow-md sm:h-96 sm:w-72 md:h-130 md:w-80 delay-{i *
 					100}"
 				use:inView={{ threshold: 0.3 }}
 			/>
@@ -35,7 +37,7 @@
 	</div>
 	<!-- button outline -->
 	<button
-		class="btn-outline scale-in animate-on-scroll cursor-pointer border-2 border-[#592602] bg-transparent px-10 py-2.5 font-semibold text-[#592602] transition-all duration-300"
+		class="btn-outline scale-in animate-on-scroll mx-4 w-full cursor-pointer border-2 border-[#592602] bg-transparent px-8 py-2.5 font-semibold text-[#592602] transition-all duration-300 sm:w-auto sm:px-10"
 		use:inView
 	>
 		Reservasi Sekarang
