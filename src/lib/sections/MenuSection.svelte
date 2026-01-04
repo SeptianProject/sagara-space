@@ -1,5 +1,7 @@
 <script>
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+	import MenuCarousel from '$lib/components/MenuCarousel.svelte';
+	import MenuCard from '$lib/components/MenuCard.svelte';
 
 	const coffeeImage = getCloudinaryUrl('rihat/about/about.webp', 'fullOptimized');
 	const rihatKopiSusu = getCloudinaryUrl('rihat/menu/rihat-kopi-susu.webp', 'fullOptimized');
@@ -7,6 +9,60 @@
 	const roseMatcha = getCloudinaryUrl('rihat/menu/rose-matcha.webp', 'fullOptimized');
 
 	const cardMenus = [
+		{
+			name: 'Rihat Kopi Susu',
+			image: rihatKopiSusu,
+			price: '18K',
+			description: 'Perpaduan kopi robusta pilihan dengan susu segar yang lembut.'
+		},
+		{
+			name: 'Mocha Latte',
+			image: mochaLatte,
+			price: '23K',
+			description: 'Kombinasi sempurna antara cokelat kaya dan espresso yang kuat.'
+		},
+		{
+			name: 'Rose Matcha',
+			image: roseMatcha,
+			price: '25K',
+			description: 'Teh hijau matcha berkualitas tinggi dengan sentuhan aroma mawar yang harum.'
+		},
+		{
+			name: 'Rihat Kopi Susu',
+			image: rihatKopiSusu,
+			price: '18K',
+			description: 'Perpaduan kopi robusta pilihan dengan susu segar yang lembut.'
+		},
+		{
+			name: 'Mocha Latte',
+			image: mochaLatte,
+			price: '23K',
+			description: 'Kombinasi sempurna antara cokelat kaya dan espresso yang kuat.'
+		},
+		{
+			name: 'Rose Matcha',
+			image: roseMatcha,
+			price: '25K',
+			description: 'Teh hijau matcha berkualitas tinggi dengan sentuhan aroma mawar yang harum.'
+		},
+		{
+			name: 'Rihat Kopi Susu',
+			image: rihatKopiSusu,
+			price: '18K',
+			description: 'Perpaduan kopi robusta pilihan dengan susu segar yang lembut.'
+		},
+		{
+			name: 'Mocha Latte',
+			image: mochaLatte,
+			price: '23K',
+			description: 'Kombinasi sempurna antara cokelat kaya dan espresso yang kuat.'
+		},
+		{
+			name: 'Rose Matcha',
+			image: roseMatcha,
+			price: '25K',
+			description: 'Teh hijau matcha berkualitas tinggi dengan sentuhan aroma mawar yang harum.'
+		},
 		{
 			name: 'Rihat Kopi Susu',
 			image: rihatKopiSusu,
@@ -58,20 +114,18 @@
 			<h1 class="text-4xl font-bold text-[#333333]">Our Best Menu’s</h1>
 			<p class="text-lg text-[#333333]/70">Deretan Menu Kami yang Paling Recommended!</p>
 		</div>
-		<!-- menu card -->
-		<div class="grid grid-cols-3 gap-12">
-			{#each cardMenus as menu}
-				<div
-					class=" flex h-140 w-95 flex-col items-center gap-4 border border-[#2424242B] transition-shadow duration-300 hover:shadow-lg"
-				>
-					<img src={menu.image} alt={menu.name} class=" top-0 right-0 h-3/4 w-full object-cover" />
-					<div class="px-5">
-						<p class="text-lg font-bold text-[#592602]">Rp {menu.price}</p>
-						<h2 class="text-lg font-semibold text-[#333333]">{menu.name}</h2>
-						<p class="text-sm text-[#333333]/70">{menu.description}</p>
-					</div>
-				</div>
-			{/each}
+		<!-- menu carousel -->
+		<div class="w-full">
+			<MenuCarousel autoplay={true} autoplayDelay={3000}>
+				{#each cardMenus as menu}
+					<MenuCard
+						name={menu.name}
+						image={menu.image}
+						price={menu.price}
+						description={menu.description}
+					/>
+				{/each}
+			</MenuCarousel>
 		</div>
 		<!-- button outline  -->
 		<button
